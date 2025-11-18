@@ -1,3 +1,17 @@
+// Icons that have explicit _day/_night variants (use day/night suffix)
+const dayNightIcons = new Set([
+    'clear', 'mostly_clear', 'mostly_cloudy', 'partly_cloudy',
+    'scattered_showers', 'scattered_snow_showers', 'isolated_scattered_thunderstorms'
+]);
+
+// Icons that have _light/_dark variants (map day->light, night->dark)
+const lightDarkIcons = new Set([
+    'cloudy_with_rain','cloudy_with_snow','cloudy_with_sunny',
+    'rain_with_cloudy','rain_with_snow','rain_with_sunny',
+    'snow_with_cloudy','snow_with_rain','snow_with_sunny',
+    'sunny_with_cloudy','sunny_with_rain','sunny_with_snow'
+]);
+
 class weather {
 
     weatherAlerts: any = undefined
@@ -6,10 +20,22 @@ class weather {
         if(this.weatherAlerts === undefined) {
             let request = await fetch("/alerts/");
             let response = await request.json()
-            this.weatherAlerts = response;
+            this.weatherAlerts = response.warnings;
         }
-        console.log(this.weatherAlerts);
         return this.weatherAlerts;
+    }
+
+    async getCurrentWeatherAlerts() {
+        let currentAlerts: any[] = [];
+        const alerts = await this.getWeatherAlerts();
+        alerts.forEach((alert: any) => {
+            Object.values(alert.alert.info[0].area).forEach((area: any) => {
+                if(area.areaDesc === "Emilia e Romagna" && alert.alert.info[0].expires > new Date().toISOString() && alert.alert.info[0].language == 'en-GB' && !alert.alert.info[0].event.includes("Green")) {
+                    currentAlerts.push(alert);
+                }
+            });
+        });
+        return currentAlerts;
     }
 
     satelliteImages: any = undefined
@@ -25,12 +51,22 @@ class weather {
     getWeatherDescription(code: number, is_day: number) {
         const entry = wmoWeatherCodes.find(e => e.code === code);
         if (!entry) {
-            return { name: "Unknown", icon: "unknown" };
+            return { name: "Unknown", icon: "/icons/unknown.svg" };
         }
-        
+
+        const base = entry.icon;
+        let filename: string;
+        if (dayNightIcons.has(base)) {
+            filename = `${base}_${is_day == 1 ? 'day' : 'night'}.svg`;
+        } else if (lightDarkIcons.has(base)) {
+            filename = `${base}_${is_day == 1 ? 'light' : 'dark'}.svg`;
+        } else {
+            filename = `${base}.svg`;
+        }
+
         return {
             name: entry.name,
-            icon: `/icons/${entry.icon}_${is_day == 1 ? "day" : "night"}.svg`
+            icon: `/icons/${filename}`
         };
     }
 
@@ -64,12 +100,12 @@ const wmoWeatherCodes = [
   { code: 55, name: "Heavy drizzle",             icon: "drizzle" },
   { code: 56, name: "Freezing drizzle light",    icon: "sleet_hail" },
   { code: 57, name: "Freezing drizzle heavy",    icon: "sleet_hail" },
-  { code: 61, name: "Light rain",                icon: "rain_with_cloudy_light" },
-  { code: 63, name: "Moderate rain",             icon: "rain_with_cloudy_dark" },
+    { code: 61, name: "Light rain",                icon: "rain_with_cloudy" },
+    { code: 63, name: "Moderate rain",             icon: "rain_with_cloudy" },
   { code: 65, name: "Heavy rain",                icon: "heavy_rain" },
   { code: 66, name: "Light freezing rain",       icon: "sleet_hail" },
   { code: 67, name: "Heavy freezing rain",       icon: "sleet_hail" },
-  { code: 71, name: "Light snow",                icon: "snow_with_cloudy_light" },
+    { code: 71, name: "Light snow",                icon: "snow_with_cloudy" },
   { code: 73, name: "Heavy snow",                icon: "heavy_snow" },
   { code: 75, name: "Continuous heavy snow",     icon: "blizzard" },
   { code: 77, name: "Snow grains",               icon: "flurries" },

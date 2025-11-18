@@ -90,6 +90,10 @@
   --border-radius-heavy: 16px;
 }
 
+    .modebar{
+      display: none !important;
+    }
+
 * {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
@@ -396,7 +400,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:foc
 }
 
 .flexrow, .flexrow-responsive {
-  display: flex !important;
+  display: flex;
   flex-direction: row !important;
 }
 
@@ -527,6 +531,23 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:foc
 nav {
   background-color: var(--secondary-color);
 }
+
+.bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+.bg-secondary-hover:hover {
+  background-color: var(--secondary-color);
+}
+
+.bg-terthiary-hover:hover {
+  background-color: var(--terthiary-color);
+}
+
+.bg-terthiary {
+  background-color: var(--terthiary-color);
+}
+
 
 .border-right {
   		border-right: 1px solid var(--outline-color);

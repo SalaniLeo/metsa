@@ -81,7 +81,7 @@
 
 <style>
 	nav {
-        z-index: 2;
+        z-index: 3;
 		border-right: 1px solid var(--outline-color);
 	}
 	@media screen and (max-width: 720px) {
@@ -94,6 +94,7 @@
 			transition-duration: 0.25s;
 		}
 		.wrapper {
+			z-index: 3;
 			transform: translateX(-100%);
 			position: absolute;
 			transition-duration: 0.5s !important;
