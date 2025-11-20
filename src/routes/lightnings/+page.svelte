@@ -3,7 +3,7 @@
 
 </script>
 
-<div class="flexcolumn gap3 hexpand vexpand">
+<div class="flexcolumn gap3 padding3-responsive vexpand">
     <div class="flexcolumn gap2">
         <h1>Meteociel</h1>
         <div class="flexrow gap3 hexpand scroll">

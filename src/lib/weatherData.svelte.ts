@@ -13,6 +13,14 @@ const lightDarkIcons = new Set([
 ]);
 
 class weather {
+    formatTemperature(temp: number | any) {
+        return Math.round(temp * 100) / 100
+    }
+
+    convertTimestamp(time: String, n: any) {
+        return Object.values(n).length <= 24 ? String(time).slice(16, 21) : String(time).slice(4, 10) + ' - ' + String(time).slice(16, 21)
+
+    }
 
     weatherAlerts: any = undefined
 
@@ -86,7 +94,6 @@ class weather {
 }
 
 export const weatherFuncs = new weather();
-
 
 const wmoWeatherCodes = [
   { code:   0, name: "Clear sky",                 icon: "clear" },

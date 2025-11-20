@@ -1,15 +1,53 @@
 import { fetchWeatherApi } from "openmeteo";
+import { browser } from "$app/environment";
+import type { coordinates as coordinatesInterface } from "./components/templates/interfaces";
+import { invalidateAll } from "$app/navigation";
+import { getCityName } from "$lib";
 
-const params = {
-	latitude: 44.83,
-	longitude: 11.62,
+class coordinatesClass {
+
+	lat = $state(browser && localStorage.getItem('coordinates') !== null ? JSON.parse(localStorage.getItem('coordinates') ?? '44.82').lat : 44.82)
+	lon = $state(browser && localStorage.getItem('coordinates') !== null ? JSON.parse(localStorage.getItem('coordinates') ?? '11.63').lon : 11.63)
+	city_name = $state()
+
+	async getCityName() {
+		if(this.city_name) {
+			return this.city_name
+		} else {
+			this.city_name = await getCityName(this.lat, this.lon)
+			return this.city_name
+		}
+	}
+
+	getWeatherCoordinates() {
+		return { lat: this.lat, lon: this.lon }
+	}
+
+	setWeatherCoordinates(coordinates: coordinatesInterface) {
+		this.lat = coordinates.lat
+		this.lon = coordinates.lon
+
+		if(browser) {
+			localStorage.setItem('coordinates', JSON.stringify({ lat: this.lat, lon: this.lon }))
+		}
+
+		invalidateAll()
+
+	}
+}
+
+export let coordinates: coordinatesClass = new coordinatesClass()
+
+const params = $derived({
+	latitude: coordinates.lat,
+	longitude: coordinates.lon,
 	daily: ["weather_code", "temperature_2m_max", "apparent_temperature_max", "apparent_temperature_min", "temperature_2m_min", "uv_index_clear_sky_max", "uv_index_max", "sunshine_duration", "daylight_duration", "sunrise", "sunset", "showers_sum", "rain_sum", "snowfall_sum", "precipitation_sum", "precipitation_probability_max", "precipitation_hours", "et0_fao_evapotranspiration", "shortwave_radiation_sum", "wind_direction_10m_dominant", "wind_gusts_10m_max", "wind_speed_10m_max", "temperature_2m_mean", "apparent_temperature_mean", "cape_mean", "cape_max", "cape_min", "cloud_cover_mean", "cloud_cover_min", "cloud_cover_max", "dew_point_2m_mean", "dew_point_2m_max", "dew_point_2m_min", "pressure_msl_min", "pressure_msl_max", "pressure_msl_mean", "snowfall_water_equivalent_sum", "relative_humidity_2m_max", "relative_humidity_2m_min", "relative_humidity_2m_mean", "precipitation_probability_min", "precipitation_probability_mean", "leaf_wetness_probability_mean", "growing_degree_days_base_0_limit_50", "et0_fao_evapotranspiration_sum", "surface_pressure_mean", "surface_pressure_max", "updraft_max", "surface_pressure_min", "visibility_mean", "visibility_min", "visibility_max", "winddirection_10m_dominant", "wind_gusts_10m_mean", "wind_speed_10m_mean", "wind_gusts_10m_min", "wind_speed_10m_min", "vapour_pressure_deficit_max", "wet_bulb_temperature_2m_min", "wet_bulb_temperature_2m_max", "wet_bulb_temperature_2m_mean"],
 	hourly: ["temperature_2m", "relative_humidity_2m", "dew_point_2m", "apparent_temperature", "precipitation_probability", "precipitation", "rain", "showers", "snowfall", "snow_depth", "vapour_pressure_deficit", "evapotranspiration", "et0_fao_evapotranspiration", "visibility", "cloud_cover_high", "cloud_cover_mid", "cloud_cover_low", "cloud_cover", "surface_pressure", "pressure_msl", "weather_code", "wind_speed_10m", "wind_speed_80m", "wind_speed_120m", "wind_speed_180m", "wind_direction_10m", "wind_direction_80m", "wind_direction_120m", "wind_gusts_10m", "wind_direction_180m", "temperature_80m", "temperature_180m", "temperature_120m", "soil_moisture_27_to_81cm", "soil_moisture_9_to_27cm", "soil_moisture_3_to_9cm", "soil_moisture_1_to_3cm", "soil_moisture_0_to_1cm", "soil_temperature_54cm", "soil_temperature_18cm", "soil_temperature_6cm", "soil_temperature_0cm", "uv_index", "uv_index_clear_sky", "is_day", "sunshine_duration", "total_column_integrated_water_vapour", "wet_bulb_temperature_2m", "boundary_layer_height", "freezing_level_height", "convective_inhibition", "lifted_index", "cape", "shortwave_radiation", "direct_radiation", "direct_normal_irradiance", "global_tilted_irradiance", "diffuse_radiation", "terrestrial_radiation_instant", "global_tilted_irradiance_instant", "direct_normal_irradiance_instant", "diffuse_radiation_instant", "direct_radiation_instant", "shortwave_radiation_instant", "terrestrial_radiation"],
 	models: "best_match",
 	current: ["temperature_2m", "relative_humidity_2m", "apparent_temperature", "is_day", "snowfall", "wind_gusts_10m", "wind_direction_10m", "wind_speed_10m", "weather_code", "cloud_cover", "pressure_msl", "surface_pressure", "rain", "showers", "precipitation"],
 	minutely_15: ["temperature_2m", "relative_humidity_2m", "dew_point_2m", "apparent_temperature", "precipitation", "shortwave_radiation", "direct_radiation", "diffuse_radiation", "global_tilted_irradiance", "direct_normal_irradiance", "terrestrial_radiation", "terrestrial_radiation_instant", "global_tilted_irradiance_instant", "direct_normal_irradiance_instant", "shortwave_radiation_instant", "diffuse_radiation_instant", "direct_radiation_instant", "sunshine_duration", "freezing_level_height", "snowfall_height", "rain", "snowfall", "weather_code", "wind_speed_10m", "wind_speed_80m", "wind_direction_10m", "wind_direction_80m", "is_day", "lightning_potential", "cape", "visibility", "wind_gusts_10m"],
-    
-};
+})
+
 const url = "https://api.open-meteo.com/v1/forecast";
 const responses = await fetchWeatherApi(url, params);
 
@@ -38,7 +76,193 @@ const sunrise = daily.variables(9)!;
 const sunset = daily.variables(10)!;
 
 // Note: The order of weather variables in the URL query and the indices below need to match!
-const weatherData = {
+export const weatherData = {
+	current_units: {
+		time: "iso8601",
+		interval: "seconds",
+		temperature_2m: "°C",
+		relative_humidity_2m: "%",
+		apparent_temperature: "°C",
+		is_day: "",
+		snowfall: "cm",
+		wind_gusts_10m: "km/h",
+		wind_direction_10m: "°",
+		wind_speed_10m: "km/h",
+		weather_code: "wmo code",
+		cloud_cover: "%",
+		pressure_msl: "hPa",
+		surface_pressure: "hPa",
+		rain: "mm",
+		showers: "mm",
+		precipitation: "mm"
+	},
+	minutely_15_units: {
+		time: "iso8601",
+		temperature_2m: "°C",
+		relative_humidity_2m: "%",
+		dew_point_2m: "°C",
+		apparent_temperature: "°C",
+		precipitation: "mm",
+		shortwave_radiation: "W/m²",
+		direct_radiation: "W/m²",
+		diffuse_radiation: "W/m²",
+		global_tilted_irradiance: "W/m²",
+		direct_normal_irradiance: "W/m²",
+		terrestrial_radiation: "W/m²",
+		terrestrial_radiation_instant: "W/m²",
+		global_tilted_irradiance_instant: "W/m²",
+		direct_normal_irradiance_instant: "W/m²",
+		shortwave_radiation_instant: "W/m²",
+		diffuse_radiation_instant: "W/m²",
+		direct_radiation_instant: "W/m²",
+		sunshine_duration: "s",
+		freezing_level_height: "m",
+		snowfall_height: "m",
+		rain: "mm",
+		snowfall: "cm",
+		weather_code: "wmo code",
+		wind_speed_10m: "km/h",
+		wind_speed_80m: "km/h",
+		wind_direction_10m: "°",
+		wind_direction_80m: "°",
+		is_day: "",
+		lightning_potential: "J/kg",
+		cape: "J/kg",
+		visibility: "m",
+		wind_gusts_10m: "km/h"
+	},
+	hourly_units: {
+		time: "iso8601",
+		temperature_2m: "°C",
+		relative_humidity_2m: "%",
+		dew_point_2m: "°C",
+		apparent_temperature: "°C",
+		precipitation_probability: "%",
+		precipitation: "mm",
+		rain: "mm",
+		showers: "mm",
+		snowfall: "cm",
+		snow_depth: "m",
+		vapour_pressure_deficit: "kPa",
+		evapotranspiration: "mm",
+		et0_fao_evapotranspiration: "mm",
+		visibility: "m",
+		cloud_cover_high: "%",
+		cloud_cover_mid: "%",
+		cloud_cover_low: "%",
+		cloud_cover: "%",
+		surface_pressure: "hPa",
+		pressure_msl: "hPa",
+		weather_code: "wmo code",
+		wind_speed_10m: "km/h",
+		wind_speed_80m: "km/h",
+		wind_speed_120m: "km/h",
+		wind_speed_180m: "km/h",
+		wind_direction_10m: "°",
+		wind_direction_80m: "°",
+		wind_direction_120m: "°",
+		wind_gusts_10m: "km/h",
+		wind_direction_180m: "°",
+		temperature_80m: "°C",
+		temperature_180m: "°C",
+		temperature_120m: "°C",
+		soil_moisture_27_to_81cm: "m³/m³",
+		soil_moisture_9_to_27cm: "m³/m³",
+		soil_moisture_3_to_9cm: "m³/m³",
+		soil_moisture_1_to_3cm: "m³/m³",
+		soil_moisture_0_to_1cm: "m³/m³",
+		soil_temperature_54cm: "°C",
+		soil_temperature_18cm: "°C",
+		soil_temperature_6cm: "°C",
+		soil_temperature_0cm: "°C",
+		uv_index: "",
+		uv_index_clear_sky: "",
+		is_day: "",
+		sunshine_duration: "s",
+		total_column_integrated_water_vapour: "kg/m²",
+		wet_bulb_temperature_2m: "°C",
+		boundary_layer_height: "m",
+		freezing_level_height: "m",
+		convective_inhibition: "J/kg",
+		lifted_index: "",
+		cape: "J/kg",
+		shortwave_radiation: "W/m²",
+		direct_radiation: "W/m²",
+		direct_normal_irradiance: "W/m²",
+		global_tilted_irradiance: "W/m²",
+		diffuse_radiation: "W/m²",
+		terrestrial_radiation_instant: "W/m²",
+		global_tilted_irradiance_instant: "W/m²",
+		direct_normal_irradiance_instant: "W/m²",
+		diffuse_radiation_instant: "W/m²",
+		direct_radiation_instant: "W/m²",
+		shortwave_radiation_instant: "W/m²",
+		terrestrial_radiation: "W/m²"
+	},
+	daily_units: {
+		time: "iso8601",
+		weather_code: "wmo code",
+		temperature_2m_max: "°C",
+		apparent_temperature_max: "°C",
+		apparent_temperature_min: "°C",
+		temperature_2m_min: "°C",
+		uv_index_clear_sky_max: "",
+		uv_index_max: "",
+		sunshine_duration: "s",
+		daylight_duration: "s",
+		sunrise: "iso8601",
+		sunset: "iso8601",
+		showers_sum: "mm",
+		rain_sum: "mm",
+		snowfall_sum: "cm",
+		precipitation_sum: "mm",
+		precipitation_probability_max: "%",
+		precipitation_hours: "h",
+		et0_fao_evapotranspiration: "mm",
+		shortwave_radiation_sum: "MJ/m²",
+		wind_direction_10m_dominant: "°",
+		wind_gusts_10m_max: "km/h",
+		wind_speed_10m_max: "km/h",
+		temperature_2m_mean: "°C",
+		apparent_temperature_mean: "°C",
+		cape_mean: "J/kg",
+		cape_max: "J/kg",
+		cape_min: "J/kg",
+		cloud_cover_mean: "%",
+		cloud_cover_min: "%",
+		cloud_cover_max: "%",
+		dew_point_2m_mean: "°C",
+		dew_point_2m_max: "°C",
+		dew_point_2m_min: "°C",
+		pressure_msl_min: "hPa",
+		pressure_msl_max: "hPa",
+		pressure_msl_mean: "hPa",
+		snowfall_water_equivalent_sum: "mm",
+		relative_humidity_2m_max: "%",
+		relative_humidity_2m_min: "%",
+		relative_humidity_2m_mean: "%",
+		precipitation_probability_min: "%",
+		precipitation_probability_mean: "%",
+		leaf_wetness_probability_mean: "undefined",
+		growing_degree_days_base_0_limit_50: "undefined",
+		et0_fao_evapotranspiration_sum: "mm",
+		surface_pressure_mean: "hPa",
+		surface_pressure_max: "hPa",
+		updraft_max: "m/s",
+		surface_pressure_min: "hPa",
+		visibility_mean: "m",
+		visibility_min: "m",
+		visibility_max: "m",
+		winddirection_10m_dominant: "°",
+		wind_gusts_10m_mean: "km/h",
+		wind_speed_10m_mean: "km/h",
+		wind_gusts_10m_min: "km/h",
+		wind_speed_10m_min: "km/h",
+		vapour_pressure_deficit_max: "kPa",
+		wet_bulb_temperature_2m_min: "°C",
+		wet_bulb_temperature_2m_max: "°C",
+		wet_bulb_temperature_2m_mean: "°C"
+	},
 	current: {
 		time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
 		temperature_2m: current.variables(0)!.value(),
@@ -263,5 +487,3 @@ console.log(
 console.log("\nMinutely15 data:\n", weatherData.minutely15)
 console.log("\nHourly data:\n", weatherData.hourly)
 console.log("\nDaily data:\n", weatherData.daily)
-
-export { weatherData }

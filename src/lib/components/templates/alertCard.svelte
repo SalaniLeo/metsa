@@ -4,8 +4,6 @@
     let showDetails = $state(false);
 
     let severityClass = alertInfo.severity.toLowerCase();
-
-
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -46,5 +44,9 @@
     .moderate {
         background-color: var(--font-warning-color);
         border: 2px solid var(--font-warning-color) !important;
+    }
+    .severe {
+        background-color: var(--font-error-color);
+        border: 2px solid var(--font-error-color) !important;
     }
 </style>

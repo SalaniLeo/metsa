@@ -3,9 +3,8 @@
 
 </script>
 
-<div class="flexcolumn hexpand">
-
-    <div class="flexcolumn gap2 hexpand">
+<div class="flexcolumn padding3-responsive">
+    <div class="flexcolumn gap2">
         <h1>Satellite - Eumetsat</h1>
         <div class="flexrow gap3 hexpand scroll">
             <SatelliteImage title="Fog" image="https://eumetview.eumetsat.int/static-images/latestImages/EUMETSAT_MSG_RGBFog_CentralEurope.jpg"/>

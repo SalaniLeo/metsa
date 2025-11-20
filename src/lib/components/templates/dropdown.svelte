@@ -1,11 +1,10 @@
 <script lang="ts">
-    let { title, elements, selected = $bindable() } = $props()
+	import { weatherData } from "$lib/openmeteo.svelte";
 
-    // console.log(elements)
+    let { title, dataset, selected = $bindable() } = $props()
 
     let hovered = $state();
-
-    let filteredElements = $state(elements.filter((item: any) => !selected.includes(item)))
+    let elements= Object.keys(dataset).includes('daily') ? Object.keys(weatherData.daily) : Object.keys(weatherData.hourly)
 
     function elementClicked(element: any) {
         selected.includes(element) ? selected = selected.filter((el: any) => el !== element) : selected.push(element)
@@ -14,22 +13,35 @@
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div 
-    class="dropdown wrapper radius-medium bg-tertiary"
-    onmouseenter={() => hovered = true}
-    onmouseleave={() => hovered = false}
->
-    <p class="padding2 bg-terthiary radius-medium border">{title}</p>
-
+<div class="dropdown wrapper radius-medium bg-tertiary" onmouseenter={() => hovered = true} onmouseleave={() => hovered = false}>
+    <div class="flexrow gap2 valign">
+        <p class="padding2 bg-secondary radius-medium border bg-terthiary-hover">{title}</p>
+    </div>
     <div class="dropdown-body border bg-secondary radius" class:show={hovered}>
-        {#each filteredElements as element}
+        {#each elements.filter((item: any) => !selected.includes(item)) as element}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
             <p onclick={() => {
                 elementClicked(element)
-            }} class="dropdown-item radius-light">{element}</p>
+            }} class="dropdown-item radius-light bg-terthiary-hover">{element}</p>
         {/each}
     </div>
+</div>
+<div class="valign gap2 flexrow-responsive">
+    {#each selected as preference}
+        <div class="flexrow gap2 selected-data bg-secondary padding2 radius-medium border">
+            {preference}
+            <!-- svelte-ignore a11y_consider_explicit_label -->
+            <button onclick={() => {selected = selected.filter((item: any) => item !== preference)}} class="transparent valign">
+                <svg width=20 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle opacity="0.5" cx="12" cy="12" r="10" stroke="var(--font-secondary-color)" stroke-width="1.5"></circle> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="var(--font-primary-color)" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+            </button>
+        </div>
+    {/each}
+    {#if Object.keys(selected).length > 5}
+        <button class="valign secondary transparent fit-content" onclick={() => {
+            selected = []
+        }}>reset</button>
+    {/if}
 </div>
 
 <style>
@@ -46,16 +58,12 @@
         top: 100%;
         left: 0;
         padding: 0.5rem;
-        z-index: 10;
+        z-index: 10000 !important;
         border-radius: 0.3rem;
     }
 
     .dropdown-item {
         padding: 0.3rem 0.5rem;
-    }
-
-    .dropdown-item:hover {
-        background: var(--accent-color-primary);
     }
 
     .show {

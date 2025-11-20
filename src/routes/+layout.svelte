@@ -1,11 +1,19 @@
 <script lang="ts">
 	import Sidebar from './../lib/components/sidebar.svelte';
 	import favicon from '$lib/assets/favicon.svg';
+	import { weatherFuncs } from '$lib/weatherData.svelte.js';
+	import type { coordinates } from '$lib/components/templates/interfaces.js';
 
-	let { children, data } = $props();
+	type PageData = {
+		coordinates: coordinates,
+	}
+
+	let { children, data } = $props() as { children: any; data: PageData };
 	let showsidebar = $state(false);
 
 	let y = $state(0)
+
+	// weatherFuncs.setCoordinates(data.coordinates)
 
 </script>
 
@@ -17,7 +25,7 @@
 
 <div class="wrapper">
 	<div  class="flexrow gap2 vexpand scroll">
-		<Sidebar bind:showsidebar data></Sidebar>
+		<Sidebar bind:showsidebar></Sidebar>
 		<div class="flexcolumn scroll hexpand">
 			<div class="padding2 border-bottom bg-terthiary topBar valign hide-desktop show-mobile">
 				<div class="flexrow">
@@ -48,7 +56,7 @@
 					</svg>
 					<div class="hendalign valign flexrow gap2 hexpand">
 						<img src={favicon} width="28px" alt="appicon" />
-						<!-- <h3>Weathy</h3> -->
+						<!-- <h3>metsa</h3> -->
 					</div>
 				</div>
 			</div>

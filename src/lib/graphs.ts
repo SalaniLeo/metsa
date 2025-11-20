@@ -1,13 +1,13 @@
-import { weatherData } from "./openmeteo"
+import { weatherData } from "./openmeteo.svelte"
 
 export interface forecastGraph {
-    dataset: any,
-    startIndex: undefined | number,
-    endIndex: undefined | number,
-    startingData: String[]
+    dataset: typeof weatherData[keyof typeof weatherData],
+    startIndex: number | undefined,
+    endIndex: number | undefined,
+    startingData: string[]
 }
 
-export function getGraph(startingData: string[], dataset: string = "minutely15", startIndex: undefined | number = undefined, endIndex: undefined | number = undefined) {
+export function getGraph(startingData: string[], dataset: keyof typeof weatherData = "minutely15", startIndex: number | undefined = undefined, endIndex: number | undefined = undefined) {
     let graph: forecastGraph = { dataset: weatherData[dataset], startIndex: startIndex, endIndex: endIndex, startingData: startingData }
     return graph
 }
