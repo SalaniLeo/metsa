@@ -8,18 +8,17 @@
 
 <div class="flexrow hexpand">
     <div class="padding2">
-        <img width="150px" src={weatherDescription.icon} alt="Weather Icon" />
+        <img width="125px" src={weatherDescription.icon} alt="Weather Icon" />
     </div>
     <div>
         {#await getCityName(coordinates.lat, coordinates.lon)}
-            <h1 style="font-size: 46px;" class="secondary">Loading...</h1>
+            <h1 style="font-size: 38px;" class="secondary">Loading...</h1>
         {:then placeName} 
-            {console.log(placeName)}
-            <h1 style="font-size: 46px;">{placeName.address.city || placeName.address.village}</h1>
+            <h1 style="font-size: 38px;">{placeName.address.city || placeName.address.village}</h1>
         {/await}
         <div class="flexcolumn gap3">
             <div class="flexrow">
-                <h1>{weatherDescription.name}</h1>
+                <h2>{weatherDescription.name}</h2>
             </div>
             <div class="flexrow gap2">
             </div>

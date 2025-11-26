@@ -106,13 +106,13 @@
                             <h3>Day overview</h3>
                             <div class="flexrow gap2">
                                 <div class="flexcolumn">
-                                    {#each user.preferences.forecasts.daily_datesets as dataset}
+                                    {#each user.preferences.forecasts.daily_datasets as dataset}
                                         <p class="secondary">{dataset}</p>
                                     {/each}
                                 </div>
                                 <div class="border-left"></div>
                                 <div class="flexcolumn">
-                                    {#each user.preferences.forecasts.daily_datesets as dataset}
+                                    {#each user.preferences.forecasts.daily_datasets as dataset}
                                         <p>{typeof (weatherData.daily as any)[dataset][$showMoreIndex] === "number" ? roundNumber((weatherData.daily as any)[dataset][$showMoreIndex]) : (weatherData.daily as any)[dataset][$showMoreIndex]} {(weatherData.daily_units as any)[dataset]}</p>
                                     {/each}
                                     </div>

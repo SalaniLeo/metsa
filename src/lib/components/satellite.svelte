@@ -66,22 +66,24 @@
     async function preloadImages(urls: any[]) {
         return Promise.all(
             urls.map((url: string) =>
-            new Promise((resolve, reject) => {
+            new Promise((resolve) => {
                 const img = new Image();
                 img.src = url;
                 img.onload = () => {resolve(img); loaded += 1};
-                img.onerror = reject;
+                img.onerror = () => {
+                    resolve(null);
+                };
             })
             )
-        );
+        ).then((images) => images.filter((img) => img !== null)); // Filter out failed images
     }
 </script>
 
 
 <div class="margin-top2">
     <div class="satellite-imagery radius-heavy flexcolumn gap2 halign">
-        {#if images.length == 48}
-            <img class="image radius-heavy" src={images[rangeValue].src} alt="Satellite Image">
+        {#if allImagesLoaded}
+            <img class="image radius-heavy" src={images[rangeValue].src} alt="European satellite view">
         {/if}
         <div class="flexrow hexpand valign gap2">
             <p>{date}</p>

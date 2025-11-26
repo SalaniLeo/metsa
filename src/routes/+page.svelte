@@ -28,7 +28,7 @@
             <div class="border-top"></div>
             <WeeklyForecast></WeeklyForecast>
         </div>
-        <div class="flexcolumn gap1">
+        <div class="flexcolumn gap1 hexpand" style="max-width: 600px;">
             {#await weatherFuncs.getCurrentWeatherAlerts()}
                 Checking for alerts...
             {:then alerts}
@@ -38,6 +38,5 @@
         </div>
     </div>
     <div class="border-top"></div>
-    <!-- <ForecastGraphs dataset={weatherData.hourly} start={undefined} end={undefined} startingData={['temperature_2m']}></ForecastGraphs> -->
-    <ForecastGraphs graph={getGraph(user.preferences.graphs.hourly_datasets)}></ForecastGraphs>
+    <ForecastGraphs graph={getGraph(user.preferences.graphs.minutely_datasets)}></ForecastGraphs>
 </div>

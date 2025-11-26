@@ -61,12 +61,6 @@
 				datasets: graphDatasets,
 			},
 			options: {
-				interaction: {
-					mode: 'x'
-				},
-				hover: {
-					mode: "x"
-				},
 				responsive: true,
 				scales: {
 					y: {
@@ -102,7 +96,7 @@
 		<div class="flexrow-responsive gap2">
 			<div class="flexrow-responsive valign gap2">
 				<h3>Select graph data:</h3>
-				<Dropdown title={"Select data"} dataset={graph.dataset} bind:selected={graphData}></Dropdown>
+				<Dropdown title={"Select data"} bind:selected={graphData} type={graph.type}></Dropdown>
 			</div>
 		</div>
 	</div>

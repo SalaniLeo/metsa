@@ -60,11 +60,11 @@ const longitude = response.longitude();
 const elevation = response.elevation();
 const utcOffsetSeconds = response.utcOffsetSeconds();
 
-console.log(
-	`\nCoordinates: ${latitude}°N ${longitude}°E`,
-	`\nElevation: ${elevation}m asl`,
-	`\nTimezone difference to GMT+0: ${utcOffsetSeconds}s`,
-);
+// console.log(
+// 	`\nCoordinates: ${latitude}°N ${longitude}°E`,
+// 	`\nElevation: ${elevation}m asl`,
+// 	`\nTimezone difference to GMT+0: ${utcOffsetSeconds}s`,
+// );
 
 const current = response.current()!;
 const minutely15 = response.minutely15()!;
@@ -465,25 +465,25 @@ export const weatherData = {
 	},
 };
 
-// The 'weatherData' object now contains a simple structure, with arrays of datetimes and weather information
-console.log(
-	`\nCurrent time: ${weatherData.current.time}\n`,
-	`\nCurrent temperature_2m: ${weatherData.current.temperature_2m}`,
-	`\nCurrent relative_humidity_2m: ${weatherData.current.relative_humidity_2m}`,
-	`\nCurrent apparent_temperature: ${weatherData.current.apparent_temperature}`,
-	`\nCurrent is_day: ${weatherData.current.is_day}`,
-	`\nCurrent snowfall: ${weatherData.current.snowfall}`,
-	`\nCurrent wind_gusts_10m: ${weatherData.current.wind_gusts_10m}`,
-	`\nCurrent wind_direction_10m: ${weatherData.current.wind_direction_10m}`,
-	`\nCurrent wind_speed_10m: ${weatherData.current.wind_speed_10m}`,
-	`\nCurrent weather_code: ${weatherData.current.weather_code}`,
-	`\nCurrent cloud_cover: ${weatherData.current.cloud_cover}`,
-	`\nCurrent pressure_msl: ${weatherData.current.pressure_msl}`,
-	`\nCurrent surface_pressure: ${weatherData.current.surface_pressure}`,
-	`\nCurrent rain: ${weatherData.current.rain}`,
-	`\nCurrent showers: ${weatherData.current.showers}`,
-	`\nCurrent precipitation: ${weatherData.current.precipitation}`,
-);
-console.log("\nMinutely15 data:\n", weatherData.minutely15)
-console.log("\nHourly data:\n", weatherData.hourly)
-console.log("\nDaily data:\n", weatherData.daily)
+// // The 'weatherData' object now contains a simple structure, with arrays of datetimes and weather information
+// console.log(
+// 	`\nCurrent time: ${weatherData.current.time}\n`,
+// 	`\nCurrent temperature_2m: ${weatherData.current.temperature_2m}`,
+// 	`\nCurrent relative_humidity_2m: ${weatherData.current.relative_humidity_2m}`,
+// 	`\nCurrent apparent_temperature: ${weatherData.current.apparent_temperature}`,
+// 	`\nCurrent is_day: ${weatherData.current.is_day}`,
+// 	`\nCurrent snowfall: ${weatherData.current.snowfall}`,
+// 	`\nCurrent wind_gusts_10m: ${weatherData.current.wind_gusts_10m}`,
+// 	`\nCurrent wind_direction_10m: ${weatherData.current.wind_direction_10m}`,
+// 	`\nCurrent wind_speed_10m: ${weatherData.current.wind_speed_10m}`,
+// 	`\nCurrent weather_code: ${weatherData.current.weather_code}`,
+// 	`\nCurrent cloud_cover: ${weatherData.current.cloud_cover}`,
+// 	`\nCurrent pressure_msl: ${weatherData.current.pressure_msl}`,
+// 	`\nCurrent surface_pressure: ${weatherData.current.surface_pressure}`,
+// 	`\nCurrent rain: ${weatherData.current.rain}`,
+// 	`\nCurrent showers: ${weatherData.current.showers}`,
+// 	`\nCurrent precipitation: ${weatherData.current.precipitation}`,
+// );
+// console.log("\nMinutely15 data:\n", weatherData.minutely15)
+// console.log("\nHourly data:\n", weatherData.hourly)
+// console.log("\nDaily data:\n", weatherData.daily)
