@@ -18,7 +18,7 @@ class weather {
     }
 
     convertTimestamp(time: String, n: any) {
-        return Object.values(n).length <= 24 ? String(time).slice(16, 21) : String(time).slice(4, 10) + ' - ' + String(time).slice(16, 21)
+        return Object.values(n).length <= 24 ? String(time).slice(4, 10) : String(time).slice(4, 10) + ' - ' + String(time).slice(16, 21)
 
     }
 

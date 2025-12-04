@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Dropdown from '$lib/components/templates/dropdown.svelte';
-	import { coordinates } from '$lib/openmeteo.svelte';
+	import GraphDropdown from '$lib/components/templates/graphDropdown.svelte';
+	import { coordinates, weatherData } from '$lib/openmeteo.svelte';
 	import { user } from '$lib/userData.svelte';
 
     let insertedLat = $state(coordinates.lat)
@@ -39,11 +39,10 @@
                 <div class="flexcolumn gap2">
                     <div class="flexcolumn gap3">
                         {#each Object.keys(user.preferences.graphs) as graphPreference}
-                        <!-- {console.log(graphPreference)} -->
                         <div class="flexcolumn gap2">
                             <h3>{String(graphPreference).replace("_", " ")}</h3>
                                 <div class="flexcolumn gap2">
-                                    <Dropdown type={graphPreference} title={"Select data"} bind:selected={user.preferences.graphs[graphPreference as keyof typeof user.preferences.graphs]}></Dropdown>
+                                    <GraphDropdown elements={weatherData[graphPreference as keyof typeof weatherData]} title={"Select data"} bind:selected={user.preferences.graphs[graphPreference as keyof typeof user.preferences.graphs]}></GraphDropdown>
                                 </div>
                             </div>
                         {/each}
@@ -58,7 +57,7 @@
                         <div class="flexcolumn gap2">
                             <h3>{String(forecastsPreference).replace("_", " ")}</h3>
                                 <div class="flexcolumn gap2">
-                                    <Dropdown type={forecastsPreference} title={"Select data"} bind:selected={user.preferences.forecasts[forecastsPreference as keyof typeof user.preferences.forecasts]}></Dropdown>
+                                    <GraphDropdown elements={weatherData[forecastsPreference as keyof typeof weatherData]} title={"Select data"} bind:selected={user.preferences.forecasts[forecastsPreference as keyof typeof user.preferences.forecasts]}></GraphDropdown>
                                 </div>
                             </div>
                         {/each}

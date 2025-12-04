@@ -72,12 +72,12 @@
                     <img width="82" src="{day.dayIcon}" alt="">
                     <div class="flexcolumn gap2">
                         <h2>{day.dayDescription}</h2>
-                        <div class="valign">
-                            <svg width=18 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z" fill="var(--font-primary-color)"></path> </g></svg>
+                        <div class="valign gap2">
+                            <svg width=18 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z" fill="var(--font-secondary-color)"></path> </g></svg>
                             <p>{roundNumber(Math.max(...day.dayValues.temperature_2m))} °C</p>
                         </div>    
-                        <div class="valign">
-                            <svg width=18 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z" fill="var(--font-primary-color)"></path> </g></svg>
+                        <div class="valign gap2">
+                            <svg width=18 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M4.29289 8.29289C4.68342 7.90237 5.31658 7.90237 5.70711 8.29289L12 14.5858L18.2929 8.29289C18.6834 7.90237 19.3166 7.90237 19.7071 8.29289C20.0976 8.68342 20.0976 9.31658 19.7071 9.70711L12.7071 16.7071C12.3166 17.0976 11.6834 17.0976 11.2929 16.7071L4.29289 9.70711C3.90237 9.31658 3.90237 8.68342 4.29289 8.29289Z" fill="var(--font-secondary-color)"></path> </g></svg>
                             <p>{roundNumber(Math.min(...day.dayValues.temperature_2m))} °C</p>
                         </div>
                     </div>
@@ -106,13 +106,13 @@
                             <h3>Day overview</h3>
                             <div class="flexrow gap2">
                                 <div class="flexcolumn">
-                                    {#each user.preferences.forecasts.daily_datasets as dataset}
+                                    {#each user.preferences.forecasts.hourly as dataset}
                                         <p class="secondary">{dataset}</p>
                                     {/each}
                                 </div>
                                 <div class="border-left"></div>
                                 <div class="flexcolumn">
-                                    {#each user.preferences.forecasts.daily_datasets as dataset}
+                                    {#each user.preferences.forecasts.daily as dataset}
                                         <p>{typeof (weatherData.daily as any)[dataset][$showMoreIndex] === "number" ? roundNumber((weatherData.daily as any)[dataset][$showMoreIndex]) : (weatherData.daily as any)[dataset][$showMoreIndex]} {(weatherData.daily_units as any)[dataset]}</p>
                                     {/each}
                                     </div>
@@ -121,13 +121,14 @@
                             <h3>Hour overview, time: {weatherFuncs.convertTimestamp(day.dayValues.time[day.selectedHour], day.dayValues.time)}</h3>
                             <div class="flexrow gap2">
                                 <div class="flexcolumn">
-                                    {#each user.preferences.forecasts.hourly_datasets as dataset}
+                                    {#each user.preferences.forecasts.hourly as dataset}
                                         <p class="secondary">{dataset}</p>
                                     {/each}
                                 </div>
                                 <div class="border-left"></div>
                                 <div class="flexcolumn">
-                                    {#each user.preferences.forecasts.hourly_datasets as dataset}
+                                    {#each user.preferences.forecasts.hourly as dataset}
+                                        {console.log(dataset)}
                                         <p>{typeof day.dayValues[dataset][day.selectedHour] === "number" ? roundNumber(day.dayValues[dataset][day.selectedHour]) : day.dayValues[dataset][day.selectedHour]} {(weatherData.hourly_units as any)[dataset]}</p>
                                     {/each}
                                 </div>
@@ -135,7 +136,7 @@
                         {/if}
                     </div>
                 </div>
-                <ForecastGraphs graph={getGraph(user.preferences.graphs.hourly_datasets, "hourly", day.hoursIndexes.start, day.hoursIndexes.end)}></ForecastGraphs>
+                <ForecastGraphs graph={getGraph(user.preferences.graphs.hourly, "hourly", day.hoursIndexes.start, day.hoursIndexes.end)}></ForecastGraphs>
             </div>
         </div>
 

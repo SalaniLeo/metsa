@@ -2,7 +2,7 @@
 	import type { forecastGraph } from '$lib/graphs.ts';
 	import { Chart } from 'chart.js/auto';
 	import { onMount, onDestroy } from 'svelte';
-	import Dropdown from '../templates/dropdown.svelte';
+	import GraphDropdown from '../templates/graphDropdown.svelte';
 	import { weatherFuncs } from '$lib/weatherData.svelte';
 
 	interface Props {
@@ -35,7 +35,7 @@
 			borderColor: randomColor(data),
 			data: graph.startIndex != undefined && graph.endIndex != undefined ? Object.values((graph.dataset as any)?.[data]).slice(graph.startIndex, graph.endIndex) : (graph.dataset as any)?.[data],
 			fill: false,
-			pointRadius: 0,
+			pointRadius: 2,
 			tension: 0
 		}))
 	)
@@ -93,12 +93,18 @@
 
 <div class="flexcolumn gap2">
 	<div class="flexrow valign gap2">
-		<div class="flexrow-responsive gap2">
-			<div class="flexrow-responsive valign gap2">
-				<h3>Select graph data:</h3>
-				<Dropdown title={"Select data"} bind:selected={graphData} type={graph.type}></Dropdown>
-			</div>
+		<div class="flexrow-responsive valign gap2">
+			<h4>Select graph data:</h4>
+			<GraphDropdown elements={graph.dataset} title={"Select data"} bind:selected={graphData}></GraphDropdown>
 		</div>
 	</div>
 	<canvas bind:this={chartCanvas} id="chart"></canvas>
 </div>
+
+<style>
+	canvas {
+		/* aspect-ratio: 16/9 !important; */
+		max-width: 1600px !important;
+		max-height: 800px !important;
+	}
+</style>

@@ -8,7 +8,7 @@ export interface forecastGraph {
     startingData: string[]
 }
 
-export function getGraph(startingData: string[], dataset: keyof typeof weatherData = "minutely15", startIndex: number | undefined = undefined, endIndex: number | undefined = undefined) {
+export function getGraph(startingData: string[], dataset: keyof typeof weatherData, startIndex: number | undefined = undefined, endIndex: number | undefined = undefined) {
     let graph: forecastGraph = { type: dataset, dataset: weatherData[dataset], startIndex: startIndex, endIndex: endIndex, startingData: startingData }
     return graph
 }

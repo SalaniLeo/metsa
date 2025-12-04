@@ -1,40 +1,26 @@
 <script lang="ts">
-	import { browser } from "$app/environment";
-	import { weatherData } from "$lib/openmeteo.svelte";
+	import { savePreferences } from "$lib";
 	import { user } from "$lib/userData.svelte";
-
-    let { type, title, selected = $bindable() } = $props()
+    let { elements, selected = $bindable() } = $props()
 
     let hovered = $state();
-    let elements = type === 'daily' ? Object.keys(weatherData.daily) : type === 'hourly' ? Object.keys(weatherData.hourly) : Object.keys(weatherData.minutely15)
 
     function elementClicked(element: any) {
-        selected.includes(element) ? selected = selected.filter((el: any) => el != element) : selected.push(element)
-        saveElements()
+        selected = element
+        savePreferences(user.preferences)
     }
 
-    function saveElements() {
-        user.preferences.graphs[type === 'daily' ? 'daily_datasets' : type === 'hourly' ? 'hourly_datasets' : 'minutely_datasets'] = selected
-        if(browser) {
-            localStorage.setItem('preferences', JSON.stringify(user.preferences))
-        }
-    }
 
-    let selector = $state<HTMLElement>()
-    let height: any = $state()
 </script>
-
-<svelte:body bind:clientHeight={height}></svelte:body>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="dropdown wrapper radius-medium bg-tertiary min-content" onmouseenter={() => hovered = true} onmouseleave={() => hovered = false}>
     <div class="flexrow gap2 valign">
-        <p class="padding2 bg-secondary radius-medium border bg-terthiary-hover" bind:this={selector}>{title}</p>
+        <p class="padding2 bg-secondary radius-medium border bg-terthiary-hover">{selected}</p>
     </div>
     <div class="dropdown-body scroll border bg-secondary radius"
-        style={selector?.getBoundingClientRect().y + 316 > height ? `top: calc(-300px - 1rem)` : "top: 100%"}
         class:show={hovered}>
-        {#each elements.filter((item: any) => !selected.includes(item)) as element}
+        {#each elements as element}
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
             <p onclick={() => {
@@ -42,22 +28,6 @@
             }} class="dropdown-item radius-light bg-terthiary-hover">{element}</p>
         {/each}
     </div>
-</div>
-<div class="valign gap2 flexrow-responsive">
-    {#each selected as preference}
-        <div class="flexrow gap2 selected-data bg-secondary padding2 radius-medium border">
-            {preference}
-            <!-- svelte-ignore a11y_consider_explicit_label -->
-            <button onclick={() => {elementClicked(preference)}} class="transparent valign">
-                <svg width=20 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle opacity="0.5" cx="12" cy="12" r="10" stroke="var(--font-secondary-color)" stroke-width="1.5"></circle> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="var(--font-primary-color)" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
-            </button>
-        </div>
-    {/each}
-    {#if Object.keys(selected).length > 5}
-        <button class="valign secondary transparent fit-content" onclick={() => {
-            selected = []
-        }}>reset</button>
-    {/if}
 </div>
 
 <style>

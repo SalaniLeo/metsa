@@ -1,4 +1,5 @@
 <script lang="ts">
+
 	import NowConditions from '$lib/components/home/nowConditions.svelte';
 	import Alerts from '$lib/components/home/alerts.svelte';
 	import Satellite from '$lib/components/satellite.svelte';
@@ -8,6 +9,7 @@
 	import ForecastGraphs from '$lib/components/home/forecastGraphs.svelte';
 	import { getGraph } from '$lib/graphs';
 	import { user } from '$lib/userData.svelte';
+	import Dropdown from '$lib/components/templates/dropdown.svelte';
 
     interface PageData {
         coordinates: {
@@ -17,6 +19,7 @@
     }
 
     let { data } = $props<{ data: PageData }>();
+
 </script>
 
 <div class="flexcolumn margin2 gap3">
@@ -38,5 +41,11 @@
         </div>
     </div>
     <div class="border-top"></div>
-    <ForecastGraphs graph={getGraph(user.preferences.graphs.minutely_datasets)}></ForecastGraphs>
+    <div class="flexrow gap2 valign">
+        <h3>Graph type:</h3>
+        <Dropdown elements={Object.keys(user.preferences.graphs)} bind:selected={user.preferences.home.graph}></Dropdown>
+    </div>
+    {#key user.preferences.home.graph}
+        <ForecastGraphs graph={getGraph(user.preferences.graphs[user.preferences.home.graph as keyof typeof user.preferences.graphs], user.preferences.home.graph as keyof typeof user.preferences.graphs)}></ForecastGraphs>
+    {/key}
 </div>
