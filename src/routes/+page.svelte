@@ -10,6 +10,7 @@
 	import { getGraph } from '$lib/graphs';
 	import { user } from '$lib/userData.svelte';
 	import Dropdown from '$lib/components/templates/dropdown.svelte';
+	import { weatherData } from '$lib/openmeteo.svelte';
 
     interface PageData {
         coordinates: {
@@ -19,7 +20,7 @@
     }
 
     let { data } = $props<{ data: PageData }>();
-
+    console.log(weatherData)
 </script>
 
 <div class="flexcolumn margin2 gap3">
@@ -46,6 +47,6 @@
         <Dropdown elements={Object.keys(user.preferences.graphs)} bind:selected={user.preferences.home.graph}></Dropdown>
     </div>
     {#key user.preferences.home.graph}
-        <ForecastGraphs graph={getGraph(user.preferences.graphs[user.preferences.home.graph as keyof typeof user.preferences.graphs], user.preferences.home.graph as keyof typeof user.preferences.graphs)}></ForecastGraphs>
+        <ForecastGraphs graph={getGraph(user.preferences.graphs[user.preferences.home.graph as keyof typeof user.preferences.graphs], user.preferences.home.graph as keyof typeof user.preferences.graphs, undefined, undefined, false)}></ForecastGraphs>
     {/key}
 </div>

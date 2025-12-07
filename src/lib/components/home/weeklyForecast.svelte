@@ -106,7 +106,7 @@
                             <h3>Day overview</h3>
                             <div class="flexrow gap2">
                                 <div class="flexcolumn">
-                                    {#each user.preferences.forecasts.hourly as dataset}
+                                    {#each user.preferences.forecasts.daily as dataset}
                                         <p class="secondary">{dataset}</p>
                                     {/each}
                                 </div>
@@ -136,7 +136,7 @@
                         {/if}
                     </div>
                 </div>
-                <ForecastGraphs graph={getGraph(user.preferences.graphs.hourly, "hourly", day.hoursIndexes.start, day.hoursIndexes.end)}></ForecastGraphs>
+                <ForecastGraphs graph={getGraph(user.preferences.graphs.hourly, "hourly", day.hoursIndexes.start, day.hoursIndexes.end, false)}></ForecastGraphs>
             </div>
         </div>
 

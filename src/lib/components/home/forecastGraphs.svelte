@@ -92,12 +92,12 @@
 <svelte:window bind:innerWidth={screensize}/>
 
 <div class="flexcolumn gap2">
-	<div class="flexrow valign gap2">
+	{#if !graph.fixed}
 		<div class="flexrow-responsive valign gap2">
 			<h4>Select graph data:</h4>
 			<GraphDropdown elements={graph.dataset} title={"Select data"} bind:selected={graphData}></GraphDropdown>
 		</div>
-	</div>
+	{/if}
 	<canvas bind:this={chartCanvas} id="chart"></canvas>
 </div>
 

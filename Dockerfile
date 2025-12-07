@@ -1,4 +1,4 @@
-FROM node:22-alpine AS build
+FROM node:latest AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . ./
 RUN npm run build
 RUN npm prune --production
 
-FROM node:22-alpine AS run
+FROM node:latest AS run
 
 ENV NODE_ENV=production
 
