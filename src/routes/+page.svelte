@@ -20,7 +20,7 @@
     }
 
     let { data } = $props<{ data: PageData }>();
-    console.log(weatherData)
+
 </script>
 
 <div class="flexcolumn margin2 gap3">
