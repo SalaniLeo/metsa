@@ -326,68 +326,68 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:foc
 }
 
 .padding-bottom1 {
-  padding: 0.25rem ;
+  padding-bottom: 0.25rem ;
 }
 
 .padding-bottom2 {
-  padding: 0.5rem ;
+  padding-bottom: 0.5rem ;
 }
 
 .padding-bottom3 {
-  padding: 1rem ;
+  padding-bottom: 1rem ;
 }
 
 .padding-bottom4 {
-  padding: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .padding-left1 {
-  padding: 0.25rem ;
+  padding-left: 0.25rem ;
 }
 
 .padding-left2 {
-  padding: 0.5rem ;
+  padding-left: 0.5rem ;
 }
 
 .padding-left3 {
-  padding: 1rem ;
+  padding-left: 1rem ;
 }
 
 .padding-left4 {
-  padding: 1.5rem;
+  padding-left: 1.5rem;
 }
 
 .padding-top1 {
-  padding: 0.25rem ;
+  padding-top: 0.25rem ;
 }
 
 .padding-top2 {
-  padding: 0.5rem ;
+  padding-top: 0.5rem ;
 }
 
 .padding-top3 {
-  padding: 1rem ;
+  padding-top: 1rem ;
 }
 
 .padding-top4 {
-  padding: 1.5rem;
+  padding-top: 1.5rem;
 }
 
 
 .padding-right1 {
-  padding: 0.25rem ;
+  padding-right: 0.25rem ;
 }
 
 .padding-right2 {
-  padding: 0.5rem ;
+  padding-right: 0.5rem ;
 }
 
 .padding-right3 {
-  padding: 1rem ;
+  padding-right: 1rem ;
 }
 
 .padding-right4 {
-  padding: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .padding1 {

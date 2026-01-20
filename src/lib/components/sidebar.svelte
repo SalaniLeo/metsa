@@ -16,12 +16,6 @@
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
-{#if showsidebar}
-	<div class="hidesidebar sidebar_overlay" onclick={showsidebarHandler}></div>
-{/if}
-
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<!-- svelte-ignore a11y_click_events_have_key_events -->
 <div class="hidesidebar flexrow wrapper vexpand" class:showsidebar onclick={showsidebarHandler}>
 	<nav class="space-between flexcolumn vexpand">
 		<div class="flexcolumn valign gap4 padding4 vexpand">
@@ -29,10 +23,9 @@
 				<img src={favicon} width="32px" alt="appicon" />
 				<h1>metsa</h1>
 			</div>
-			<div class="border-top hexpand"></div>
-			<div class="content flexcolumn gap4 hexpand vexpand">
-				<div class="shortcuts flexcolumn gap4 halign valign hexpand">
-					<div class="flexrow gap2 vendalign hexpand">
+			<div class="border-top"></div>
+			<div class="content flexcolumn gap4 vexpand">
+				<div class="shortcuts flexcolumn gap2 halign valign">
 						<a href="/" class="flexrow gap2 vendalign hexpand">
 							<svg width="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
 								><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
@@ -54,7 +47,7 @@
 								</g></svg
 							>
 							<h3>Home</h3></a>
-						</div>
+
 						<a class="flexrow gap2 vendalign hexpand" href="/satellite">
 							<svg width=24px fill="var(--font-secondary-color)" viewBox="0 0 122.88 122.88" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="enable-background:new 0 0 122.88 122.88" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M5.49,79.09l37.86,37.86C66.37,99.1,36.69,54.35,5.49,79.09L5.49,79.09z M42.39,62.21l18.29,18.29 c1.18,1.18,3.12,1.18,4.3,0l24.2-24.2c6.21-6.21,6.21-16.38,0-22.59v0c-6.21-6.21-16.38-6.21-22.59,0l-24.2,24.2 C41.2,59.09,41.2,61.02,42.39,62.21L42.39,62.21z M24.5,104.83L20.33,109c-1.48,1.48-3.89,1.48-5.38,0c-1.48-1.49-1.48-3.89,0-5.38 l4.17-4.17l-17-17l0.01-0.01c-0.13-0.13-0.25-0.26-0.36-0.4C0.15,80,0.49,77.01,2.54,75.38c13.15-10.43,26.24-10.1,36.28-4.46 c1.85,1.04,3.59,2.26,5.2,3.64l1.99-1.99l-6.99-6.99c-1.52-1.52-2.28-3.52-2.28-5.51c0-1.99,0.76-3.99,2.28-5.51l5.92-5.92 l-5.11-5.11l-3.76,3.76h0c-1.22,1.22-2.83,1.84-4.44,1.84c-1.59,0-3.19-0.61-4.42-1.84l-0.01-0.01l-0.01,0.01h0L3.53,23.62 c-1.22-1.22-1.84-2.83-1.84-4.44c0-1.59,0.62-3.19,1.85-4.43l-0.01-0.01L16.44,1.84l0,0c0.16-0.16,0.33-0.31,0.51-0.44 C18.09,0.47,19.48,0,20.87,0c1.59,0,3.19,0.61,4.42,1.84l0.01,0.01l0.01-0.01l0,0L48.97,25.5v0c1.22,1.22,1.84,2.83,1.84,4.44 c0,1.6-0.61,3.21-1.84,4.44v0l-3.77,3.77l5.11,5.11l12.91-12.91c4.03-4.03,9.35-6.05,14.66-6.05c5.31,0,10.62,2.02,14.66,6.05v0 c4.03,4.03,6.05,9.35,6.05,14.66c0,5.31-2.02,10.62-6.05,14.66L79.63,72.56l5.11,5.11l3.77-3.76c1.22-1.22,2.83-1.84,4.44-1.84 c1.6,0,3.21,0.61,4.44,1.84l23.66,23.66l0,0c1.22,1.22,1.84,2.83,1.84,4.44c0,1.6-0.61,3.21-1.84,4.44l0,0l-12.91,12.91 c-1.22,1.22-2.83,1.84-4.44,1.84c-1.6,0-3.21-0.61-4.44-1.84L75.6,95.69c-1.22-1.22-1.84-2.83-1.84-4.44 c0-1.59,0.61-3.19,1.84-4.42l0.01-0.01l-0.01-0.01l3.76-3.77l-5.11-5.11l-5.92,5.92c-1.52,1.52-3.52,2.28-5.51,2.28 c-1.99,0-3.99-0.76-5.51-2.28l-5.92-5.92l-2.15,2.15c2.47,3.26,4.37,6.93,5.57,10.75c3.27,10.41,1.4,21.91-8.23,29.61 c-1.86,1.73-4.78,1.68-6.59-0.13L24.5,104.83L24.5,104.83z M0.13,106.96c-0.53-1.89,0.57-3.86,2.47-4.39 c1.89-0.53,3.86,0.57,4.39,2.47c1,3.53,2.38,6.2,4.16,7.99c1.6,1.61,3.6,2.53,6.03,2.73c1.96,0.16,3.42,1.88,3.26,3.85 c-0.16,1.96-1.88,3.42-3.85,3.26c-4.17-0.36-7.65-1.98-10.48-4.83C3.45,115.38,1.47,111.67,0.13,106.96L0.13,106.96z"></path> </g> </g></svg>
 							<h3>Maps</h3>
@@ -82,34 +75,82 @@
 	</nav>
 </div>
 
+{#if showsidebar}
+	<div class="hidesidebar sidebar_overlay" onclick={showsidebarHandler}></div>
+{/if}
+
 <style>
 	nav {
         z-index: 3;
 		border-right: 1px solid var(--outline-color);
 	}
+
 	@media screen and (max-width: 720px) {
 		.sidebar_overlay {
 			position: fixed;
 			background-color: rgba(0, 0, 0, 0.555);
 			width: 100vw;
 			height: 100vh;
-			transform: translateX(0%) !important;
-			transition-duration: 0.25s;
+			top: 0;
+			left: 0;
+			z-index: 2;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.25s ease;
 		}
+
+		.showsidebar ~ .sidebar_overlay {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
 		.wrapper {
 			z-index: 3;
+			position: fixed;
+			left: 0;
+			top: 0;
+			height: 100vh;
+			/* width: 100%; */
+			max-width: 75vw;
 			transform: translateX(-100%);
-			position: absolute;
-			transition-duration: 0.5s !important;
-			background-color: var(--shadow-color-medium);
+			transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+			background-color: var(--primary-color);
+			border-right: 1px solid var(--outline-color);
+			overflow-y: auto;
 		}
-		nav {
-			width: min-content !important;
-		}
+
 		.showsidebar {
-			display: unset !important;
-			transform: translateX(0%);
-			/* height: 100% !important; */
+			transform: translateX(0%) !important;
+		}
+
+		nav {
+			width: 100% !important;
+			height: 100%;
+		}
+
+		.shortcuts a {
+			padding: 0.75rem !important;
+			border-radius: var(--border-radius-light);
+			transition: background-color 0.2s ease;
+		}
+
+		.shortcuts a:active {
+			background-color: var(--accent-color-secondary);
+		}
+
+		.shortcuts h3 {
+			font-size: 0.95rem;
+		}
+
+		.shortcuts svg {
+			min-width: 24px;
+		}
+
+	}
+
+	@media screen and (min-width: 721px) {
+		nav {
+			width: 250px;
 		}
 	}
 </style>

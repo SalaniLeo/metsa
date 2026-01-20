@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ForecastGraphs from "$lib/components/home/forecastGraphs.svelte";
+	import SatelliteImage from "$lib/components/satelliteImage.svelte";
 	import { getGraph } from "$lib/graphs";
 	import { weatherData } from "$lib/openmeteo.svelte";
 
@@ -66,8 +67,8 @@
 
 </script>
 
-<div class="padding3 flexcolumn gap3 vexpand">
-    <div class="flexrow gap2 vexpand">
+<div class="padding3 flexcolumn gap4 vexpand">
+    <div class="flexrow gap2">
         <div class="flexcolumn gap3 hexpand">
             <div class="flexcolumn gap1">
                 <h2>Sky visible:</h2>
@@ -88,6 +89,17 @@
                 <h3>visibility graph</h3>
                 <ForecastGraphs graph={getGraph(['cloud_cover', 'cloud_cover_high', 'cloud_cover_mid', 'cloud_cover_low', 'visibility'], 'hourly', undefined, undefined, true)}></ForecastGraphs>
             </div>
+        </div>
+    </div>
+    <div class="flexcolumn padding-top3 padding-bottom3 border-top gap2">
+        <h2>Aurora visibility</h2>
+        <ol>
+            <li><h4><a href="https://www.swpc.noaa.gov/communities/aurora-dashboard-experimental">NOAA dashboard</a></h4></li> 
+            <li><h4><a href="https://www.spaceweatherlive.com/en/solar-activity.html">spaceweatherlive</a></h4></li> 
+        </ol>
+
+        <div class="flexrow">
+            <SatelliteImage title="Aurora latest" image="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg"/>
         </div>
     </div>
 </div>
