@@ -18,7 +18,7 @@
 <div class="wrapper">
 	<div class="flexrow gap2 vexpand">
 		<Sidebar bind:showsidebar></Sidebar>
-		<div class="flexcolumn hexpand">
+		<div class="flexcolumn hexpand scroll">
 			<div class="padding2 border-bottom bg-terthiary topBar valign hide-desktop show-mobile">
 				<div class="flexrow">
 					<!-- svelte-ignore a11y_click_events_have_key_events -->

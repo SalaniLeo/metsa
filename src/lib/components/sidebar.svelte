@@ -127,30 +127,5 @@
 			width: 100% !important;
 			height: 100%;
 		}
-
-		.shortcuts a {
-			padding: 0.75rem !important;
-			border-radius: var(--border-radius-light);
-			transition: background-color 0.2s ease;
-		}
-
-		.shortcuts a:active {
-			background-color: var(--accent-color-secondary);
-		}
-
-		.shortcuts h3 {
-			font-size: 0.95rem;
-		}
-
-		.shortcuts svg {
-			min-width: 24px;
-		}
-
-	}
-
-	@media screen and (min-width: 721px) {
-		nav {
-			width: 250px;
-		}
 	}
 </style>
